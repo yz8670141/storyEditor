@@ -1,0 +1,1 @@
+import{o as e,c as o,a as s}from"./index-BRvtRrJQ.js";const t={class:"alert alert-success"},_={__name:"LazyBox",setup(a){return e(()=>{console.log("✅ LazyBox.vue onMounted")}),(c,n)=>(s(),o("div",t," 我是延遲載入的區塊（使用 Suspense 顯示） "))}};export{_ as default};
