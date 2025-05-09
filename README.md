@@ -55,5 +55,3 @@ const LazyBox = defineAsyncComponent(
 - 特別強調 `<Suspense>` 與 `defineAsyncComponent` 搭配使用情境，常見於 dashboard、HMI、智慧製造等資料即時呈現系統中
 
 ---
-
-這頁為 Vue 3 教學級展示頁面，涵蓋動畫、非同步元件、Modal、錯誤處理與路由跳轉，適合作品集與進階語法練習。
