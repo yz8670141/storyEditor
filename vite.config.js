@@ -14,5 +14,27 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
-  base: "storyEditor",
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/assets/styles/variables.scss" as *;`
+      }
+    }
+  },
+  base: "/",
+  // base: "storyEditor",
+  server: {
+    host: true,
+    port: 5173,
+    watch: {
+      usePolling: true,      // ✅ 加上這行
+      interval: 100
+    },
+    
+  },
+  build: {
+    rollupOptions: {
+      external: ['axios'], // 告訴 Vite 不要打包 axios
+    }
+  }
 });

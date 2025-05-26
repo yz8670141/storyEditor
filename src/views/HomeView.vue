@@ -1,78 +1,72 @@
 <script setup>
 import ModalTeleport from '@/components/ModalTeleport.vue'
-import LazyBoxComponent from '@/components/LazyBox.vue'
-import { ref, onMounted, onUnmounted, onErrorCaptured, defineAsyncComponent } from 'vue'
+import { ref, onErrorCaptured } from 'vue'
 import { useRouter } from 'vue-router'
+import ThreeBackground from '@/components/ThreeBackground.vue'
+import TEST from '@/views/TEST.vue'
+
 const router = useRouter();
 const showModal = ref(false)
-const LazyBox = defineAsyncComponent(() =>
-    new Promise(reslove => {
-        setTimeout(() => {
-            reslove(import('@/components/LazyBox.vue'))
-        }, 1500);
-    })
-)
-const lazyLoaded = ref(false)
-let timer = null
 function goEditor() {
-    router.push('/editor')
+    router.push('/pageEditor')
 }
-onMounted(() => {
-    //console.log('⏱️ 設定 timer')
-    timer = setTimeout(() => {
-        lazyLoaded.value = true
-        console.log('✅ onMounted 執行了', lazyLoaded.value)
-    }, 3000)
-})
 
-onUnmounted(() => {
-    clearTimeout(timer)
-    console.log('🧹 timer 清除:', timer)
-})
 onErrorCaptured((error) => {
     console.log("其他的錯誤處理：", error);
 })
-function fallback() {
-    console.log("fallback")
-}
-function pending() {
-    console.log("fallback")
-}
-function resolved() {
-    console.log("fallback")
-}
+
 </script>
-
 <template>
-    <div class="container">
-        <Transition name="fade">
-            <div>
-                <h1>📘繪本編輯器</h1>
-                <p>開始創作你的第一本故事書</p>
-                <button @click="showModal = true" type="button" class="btn btn-outline-secondary">使用方法說明</button>
-                <button @click="goEditor" type="button" class="btn btn-primary">開始創作</button>
-            </div>
-        </Transition>
+  <!-- 測試用 -->
+  <TEST/>
+  <!-- Three.js 背景 -->
+  <ThreeBackground class="background-canvas" />
 
-        <Suspense @fallback="fallback" @pending="pending" @resolve="resolved">
-            <template #default>
-                <LazyBox />
-            </template>
-            <template #fallback>
-                <h1 style="background-color: red;">載入中...</h1>
-            </template>
-        </Suspense>
-        <ModalTeleport v-if="showModal" @close="showModal = false" :message="'請開始你的創作！'" />
+  <!-- 居中卡片容器 
+  <div class="full-screen-wrapper">
+    <div class="cover-container text-center">
+      <main>
+        <h1>📘 繪本編輯器</h1>
+        <p class="lead">開始創作你的第一本故事書</p>
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <button @click="showModal = true" class="btn btn-info">使用方法說明</button>   
+          <button @click="goEditor" class="btn btn-primary">開始創作</button>
+        </div>
+      </main>
     </div>
+  </div>-->
+   <ModalTeleport v-if="showModal" message="點選『開始創作』，進入頁面編輯區後，可新增頁面、上傳圖片與文字內容" @close="showModal  = false"/>
 </template>
-<style>
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s ease;
-}
+<style scoped lang="scss">
 
-.fade-enter-from,
-.fade-leave-to {
-    opacity: 0;
+.full-screen-wrapper {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: $z-index-default;
+
+  .cover-container {
+    background-color: $color-light;
+    color: $color-primary-dark;
+    border-radius: $radius-lg;
+    box-shadow: $shadow-lg;
+    padding: 2rem;
+    backdrop-filter: blur(4px);
+
+    h1 {
+      font-family: $font-main;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: $color-primary-dark
+    }
+
+    .lead {
+      font-size: $font-size-base;
+      margin-bottom: 1.5rem;
+    }
+  }
 }
 </style>

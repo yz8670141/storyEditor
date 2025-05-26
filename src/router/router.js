@@ -1,13 +1,15 @@
 import { createMemoryHistory, createRouter } from "vue-router";
 
 import HomeView from "@/views/HomeView.vue";
-import EditorView from "@/views/EditorView.vue";
-import PreviewView from "@/views/PreviewView.vue";
+import PageEditor from "@/components/PageEditor.vue";
+import BookViewer from "@/components/BookViewer.vue";
+import TEST from "@/views/TEST.vue";
 
 const routes = [
-  { path: "/", neame: "Home", component: HomeView },
-  { path: "/editor", neame: "Editor", component: EditorView },
-  { path: "/preview", neame: "Preview", component: PreviewView },
+  { path: "/", name: "Home", component: HomeView },
+  { path: "/pageEditor", name: "PageEditor", component: PageEditor },
+  { path: "/bookViewer", name: "BookViewer", component: BookViewer },
+  { path: "/tEST", name: "TEST", component: TEST },
 ];
 
 const router = createRouter({

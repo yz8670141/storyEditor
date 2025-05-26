@@ -19,8 +19,9 @@ const emit = defineEmits(['close'])
                         <p>{{ message }}</p>
                     </div>
                     <div class="modal-footer">
+                        <slot></slot>
                         <button @click="emit('close')" type="button" class="btn btn-secondary"
-                            data-bs-dismiss="modal">Close</button>
+                            data-bs-dismiss="modal">關閉</button>
                     </div>
                 </div>
             </div>
