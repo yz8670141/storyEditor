@@ -1,0 +1,6 @@
+# 這些是排除前端用的資料夾或全域垃圾
+dist
+.git
+.vscode
+frontend/dist
+frontend/node_modules

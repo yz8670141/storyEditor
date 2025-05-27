@@ -1,0 +1,10 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install && ls -al node_modules/.bin
+
+COPY . .
+
+CMD ["npm", "run", "dev"]

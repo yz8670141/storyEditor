@@ -1,14 +1,20 @@
-version: '3.8'
-
+version: "3.8"
 services:
-  dev:
+  frontend:
     build:
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile.dev
     volumes:
-      - .:/app
-      - /app/node_modules
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
     ports:
-      - "5173:5173"
+      - "8080:8080"
     environment:
       - HOST=0.0.0.0
+
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"

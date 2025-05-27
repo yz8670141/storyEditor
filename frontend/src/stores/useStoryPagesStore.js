@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
 import { getAllPagesFromDB, savePageToDB, deletePageFromDB, getPageFromDB } from '@/utils/imageDB'
+import { getPageFromAPI ,savePageToAP} from '@/utils/mockAPI'
 
 export const useStoryPagesStore = defineStore('storyPages', () => {
   const pages = ref([])
@@ -10,12 +11,13 @@ export const useStoryPagesStore = defineStore('storyPages', () => {
 
   async function initializePages() {
     try {
-      const allPages = await getAllPagesFromDB()
-      pages.value = allPages.map(p => ({
-        id: p.id,
-        json: p.json,
-        image: p.image,
-      }))
+      const allPages = await getPageFromAPI()
+      console.log("allPages",allPages)
+      // pages.value = allPages.map(p => ({
+      //   id: p.id,
+      //   json: p.json,
+      //   image: p.image,
+      // }))
     } catch (e) {
       console.warn('❌ 無法從 IndexedDB 載入頁面', e)
     }
@@ -35,7 +37,8 @@ export const useStoryPagesStore = defineStore('storyPages', () => {
   async function addPage({ id, json, image }) {
 
     const entry = { id, json, image }
-    await savePageToDB(entry)
+    // await savePageToDB(entry)
+    await savePageToAP(entry)
     pages.value.push({ id, json, image })
     setCurrentIndex(pages.value.length - 1)
 
