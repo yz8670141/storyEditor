@@ -5,7 +5,7 @@ import { useStoryPagesStore } from '@/stores/useStoryPagesStore'
 const store = useStoryPagesStore()
 
 onMounted(() => {
-  store.getPages()
+  store.initializeFromLocalStorage()
 })
 function selectPage(index) {
   store.setCurrentIndex(index)

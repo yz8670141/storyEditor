@@ -3,42 +3,40 @@ import ModalTeleport from '@/components/ModalTeleport.vue'
 import { ref, onErrorCaptured } from 'vue'
 import { useRouter } from 'vue-router'
 import ThreeBackground from '@/components/ThreeBackground.vue'
-import TEST from '@/views/TEST.vue'
-
+import Loading from '@/components/Loading.vue'
+import { useStoryPagesStore } from '@/stores/useStoryPagesStore.js'
+const store = useStoryPagesStore()
 const router = useRouter();
 const showModal = ref(false)
-function goEditor() {
+function goEditor () {
     router.push('/pageEditor')
 }
 
 onErrorCaptured((error) => {
-    console.log("其他的錯誤處理：", error);
+  console.log("其他的錯誤處理：", error);
 })
 
 </script>
 <template>
-  <!-- 測試用 -->
-  <TEST/>
-  <!-- Three.js 背景 -->
+  <!-- Three.js 背景-->
   <ThreeBackground class="background-canvas" />
 
-  <!-- 居中卡片容器--> 
+  <!-- 居中卡片容器-->
   <div class="full-screen-wrapper">
     <div class="cover-container text-center">
       <main>
         <h1>📘 繪本編輯器</h1>
         <p class="lead">開始創作你的第一本故事書</p>
         <div class="d-flex justify-content-center gap-3 flex-wrap">
-          <button @click="showModal = true" class="btn btn-info">使用方法說明</button>   
-          <button @click="goEditor" class="btn btn-primary">開始創作</button>
+          <button @click="showModal = true" class="btn btn-info">使用方法說明</button>
+          <button  @click="goEditor" class="btn btn-primary">開始創作</button>
         </div>
       </main>
     </div>
   </div>
-   <ModalTeleport v-if="showModal" message="點選『開始創作』，進入頁面編輯區後，可新增頁面、上傳圖片與文字內容" @close="showModal  = false"/>
+  <ModalTeleport v-if="showModal" message="點選『開始創作』，進入頁面編輯區後，可新增頁面、上傳圖片與文字內容" @close="showModal = false" />
 </template>
 <style scoped lang="scss">
-
 .full-screen-wrapper {
   position: fixed;
   inset: 0;

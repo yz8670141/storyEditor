@@ -4,13 +4,13 @@ import { http, HttpResponse, delay } from 'msw'
 let items = [
   {
     id: 1748318469310,
-    json: null,
-    image: "data:image/png;base64,..."
+    json: {"version":"5.3.0","objects":[],"background":"#222"},
+    image: "https://img.freepik.com/free-photo/baby-with-stuffed-animal_52683-124509.jpg?semt=ais_hybrid&w=740"
   },
   {
     id: 1,
     json: null,
-    image: "data:image/png;base64,..."
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgX7Lv0xHveCXdbdWu4wx1QXUFuXa_A9f80Q&s"
   }
 ]
 

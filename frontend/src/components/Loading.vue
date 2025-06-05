@@ -1,3 +1,8 @@
+<script setup>
+import {useStoryPagesStore} from '@/stores/useStoryPagesStore'
+const store = useStoryPagesStore()
+
+</script>
 
 <template>
   <!-- 尚未使用 -->
@@ -16,6 +21,7 @@
     <div></div>
   </div>
 </template>
+
 <style scoped>
 .lds-spinner {
   color: official;
@@ -26,6 +32,7 @@
   transform: translate(-50%, -50%);
   width: 80px;
   height: 80px;
+  z-index: 99999;
 }
 .lds-spinner div {
   transform-origin: 40px 40px;
@@ -40,7 +47,7 @@
   width: 6px;
   height: 18px;
   border-radius: 20%;
-  background: #fff;
+  background: #414141;
 }
 .lds-spinner div:nth-child(1) {
   transform: rotate(0deg);

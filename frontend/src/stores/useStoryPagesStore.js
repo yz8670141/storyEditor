@@ -1,101 +1,74 @@
 
 import { defineStore } from 'pinia'
 import { ref, watch } from 'vue'
-import { getAllPagesFromDB, savePageToDB, deletePageFromDB, getPageFromDB } from '@/utils/imageDB'
-import { getPageFromAPI ,savePageToAP} from '@/utils/mockAPI'
-
-export const useStoryPagesStore = defineStore('storyPages', () => {
-  const pages = ref([])
-  const currentIndex = ref(null)
-  const coverId = ref(null)
-
-  async function initializePages() {
+import axios from 'axios'
+export const useStoryPagesStore = defineStore('page', () => {
+  //  State
+  const pages = ref([]) //所有頁面資料
+  const responseMsg = ref('') //api接收的資料狀態
+  const error = ref('') //api接收的error狀態
+  const loading = ref(false) //設定loading compoent狀態
+  const url = '/api/items'
+  const currentIndex = ref(null) //當前顯示的頁面index
+  const coverId = ref(null)//封面id
+  //取得頁面所有資料
+   const getPages = async () => {
+    if (loading.value || pages.value.length > 0) return
+    loading.value = true
+    error.value = ''
     try {
-      const allPages = await getPageFromAPI()
-      console.log("allPages",allPages)
-      // pages.value = allPages.map(p => ({
-      //   id: p.id,
-      //   json: p.json,
-      //   image: p.image,
-      // }))
-    } catch (e) {
-      console.warn('❌ 無法從 IndexedDB 載入頁面', e)
+      const res = await axios.get(url)
+      pages.value = res.data
+    } catch (err) {
+      error.value = err.message
+    } finally {
+      loading.value = false
     }
   }
-  function initializeFromLocalStorage() {
-    const getCoverId = localStorage.getItem('storybook-cover')
-    if (getCoverId) {
-      try {
-        coverId.value = JSON.parse(getCoverId)
-      } catch (e) {
-        console.warn('解析失敗', e)
-      }
-    } else {
-      coverId.value = pages.value.length > 0 ? pages.value[0].id : null
+  //新增"單"頁資料
+  const addPage = async (payload) => {
+    loading.value = true
+    error.value = ''
+    try {
+      const res = await axios.post(url, payload)
+      responseMsg.value = res.data.message
+    } catch (err) {
+      error.value = err.message
+    } finally {
+      loading.value = false
     }
   }
-  async function addPage({ id, json, image }) {
-
-    const entry = { id, json, image }
-    // await savePageToDB(entry)
-    await savePageToAP(entry)
-    pages.value.push({ id, json, image })
-    setCurrentIndex(pages.value.length - 1)
-
-  }
-
-  async function updatePage(index, data) {
-    const page = pages.value[index]
+  //修改"單"頁資料
+  const updatePage = async (index, data) =>{
+ const page = pages.value[index]
     if (!page) return
     const updated = { ...page, ...data, updatedAt: Date.now() }
-    await savePageToDB(updated)
+    //!!! 尚未做 !!!新增到api
     pages.value[index] = updated
   }
-
-  async function removePage(index) {
-    if (pages.value.length <= 1) return
-    const removed = pages.value.splice(index, 1)[0]
-    if (removed?.id) await deletePageFromDB(removed.id)
-    if (currentIndex.value >= pages.value.length) {
-      currentIndex.value = pages.value.length - 1
-      currentIndex.value  === null
-    }
-  }
-
-  function setCurrentIndex(index) {
+  //當前顯示的頁面index
+  const setCurrentIndex = (index) =>{
     currentIndex.value = index
   }
-
-  function setCover(id) {
+function setCover(id) {
     coverId.value = id
     localStorage.setItem('storybook-cover', id)
   }
-
-  // ✅ 監聽 currentIndex，當切頁時同步取得 pageData 並更新 store（補充）
-
-  watch(() =>currentIndex, async (newIndex) => {
-    console.log('✅ watch triggered: newIndex =', newIndex)
-    const page = pages.value[newIndex]
-    if (!page) return
-    const pageData = await getPageFromDB(page.id)
-    if (!pageData) return
-    pages.value[newIndex] = {
-      id: page.id,
-      json: pageData.json,
-      image: pageData.image,
-    }
-  })
-
-  return {
+  return{
+    // state
     pages,
+    responseMsg,
+    error,
+    loading,
+    url,
     currentIndex,
-    coverId,
-    initializePages,
-    initializeFromLocalStorage,
+    
+    // actions
+    getPages,
     addPage,
-    updatePage,
-    removePage,
     setCurrentIndex,
-    setCover,
+    updatePage,
+    setCover
   }
+
 })

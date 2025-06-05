@@ -213,16 +213,20 @@ export function useFabricCanvas(canvasRef) {
   }
 
   watch(() => store.currentIndex, async (newIndex) => {
+    console.log("newIndex",newIndex)
+    console.log("store.pages",store.pages[newIndex])
     const page = store.pages[newIndex]
-
+    
+   
     if (!page) return
 
     clearCanvas()
-    const pageData = await getPageFromDB(page.id)
-    if (!pageData) return
+    // const pageData = await getPageFromDB(page.id)
+    // if (!pageData) return
+    console.log("page",page)
     store.updatePage(newIndex, {
-      json: pageData.json,
-      image: pageData.image,
+      json: page.value.json,
+      image: page.value.image,
     })
 
     if (pageData.json) loadJSON(pageData.json)
