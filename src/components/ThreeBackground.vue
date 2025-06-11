@@ -11,7 +11,7 @@ let camera, renderer
 
 onMounted(() => {
   const scene = new THREE.Scene()
-  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000)
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000)
   camera.position.z = 800
 
   const renderer = new THREE.WebGLRenderer({
