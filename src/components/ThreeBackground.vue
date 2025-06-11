@@ -14,7 +14,7 @@ onMounted(() => {
   camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 2000)
   camera.position.z = 800
 
-  const renderer = new THREE.WebGLRenderer({
+  renderer = new THREE.WebGLRenderer({
     canvas: canvas.value,
     alpha: true,
     antialias: true
