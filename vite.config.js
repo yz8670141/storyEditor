@@ -6,6 +6,7 @@ import vueDevTools from "vite-plugin-vue-devtools";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue(), vueDevTools()],
+  base: "/storyEditor/",
   resolve: {
     alias: {
       "@components": path.resolve(__dirname, "src/components"),
@@ -21,7 +22,6 @@ export default defineConfig({
       }
     }
   },
-  base: "/storyEditor/",
   server: {
     host: true,
     port: 5173,
