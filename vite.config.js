@@ -21,20 +21,15 @@ export default defineConfig({
       }
     }
   },
-  // base: "/",
-  base: "storyEditor",
+  base: "./",
   server: {
     host: true,
     port: 5173,
     watch: {
-      usePolling: true,      // ✅ 加上這行
+      usePolling: true, 
       interval: 100
     },
     
   },
-  build: {
-    rollupOptions: {
-      external: ['axios'], // 告訴 Vite 不要打包 axios
-    }
-  }
+  
 });
