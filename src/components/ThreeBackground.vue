@@ -22,7 +22,7 @@ onMounted(() => {
   renderer.setSize(window.innerWidth, window.innerHeight)
 
   const textureLoader = new THREE.TextureLoader()
-  const imageTexture = textureLoader.load('public/photo-thumb.png') // ← 將此路徑設為你的相片圖路徑
+  const imageTexture = textureLoader.load('photo-thumb.png') // ← 將此路徑設為你的相片圖路徑
 
   const geometry = new THREE.PlaneGeometry(120, 120)
   const material = new THREE.MeshBasicMaterial({ map: imageTexture, transparent: true, side: THREE.DoubleSide })
