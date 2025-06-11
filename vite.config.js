@@ -21,7 +21,7 @@ export default defineConfig({
       }
     }
   },
-  base: "./",
+  base: "/storyEditor/",
   server: {
     host: true,
     port: 5173,
