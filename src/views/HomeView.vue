@@ -3,7 +3,6 @@ import ModalTeleport from '@/components/ModalTeleport.vue'
 import { ref, onErrorCaptured } from 'vue'
 import { useRouter } from 'vue-router'
 import ThreeBackground from '@/components/ThreeBackground.vue'
-import TEST from '@/views/TEST.vue'
 
 const router = useRouter();
 const showModal = ref(false)
@@ -17,12 +16,11 @@ onErrorCaptured((error) => {
 
 </script>
 <template>
-  <!-- 測試用 -->
-  <TEST/>
+
   <!-- Three.js 背景 -->
   <ThreeBackground class="background-canvas" />
 
-  <!-- 居中卡片容器 
+  <!-- 居中卡片容器--> 
   <div class="full-screen-wrapper">
     <div class="cover-container text-center">
       <main>
@@ -34,7 +32,7 @@ onErrorCaptured((error) => {
         </div>
       </main>
     </div>
-  </div>-->
+  </div>
    <ModalTeleport v-if="showModal" message="點選『開始創作』，進入頁面編輯區後，可新增頁面、上傳圖片與文字內容" @close="showModal  = false"/>
 </template>
 <style scoped lang="scss">
